@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8">
+    <meta name="”viewport”" content="”width=device-width," initial-scale="1.0″">
+    
+    <title>AutoMapX</title>
+</head>
+<body>
+    <h1>Welcome to AutoMapX</h1>
+    <form id="repo-form">
+        <label for="repo-url">Repository URL:</label>
+        <input type="text" id="repo-url" name="repo-url">
+        <button type="button" onclick="submitRepo()">Submit</button>
+    </form>
+    <br>
+    <img src="/static/dependencies.png" alt="Dependencies">
+    <br>
+    <a href="/download/csv">Download CSV</a>
+    <br>
+    <a href="/download/excel">Download Excel</a>
+    <br>
+    <a href="/download/pdf">Download PDF</a>
+
+    <script>
+        function submitRepo() {
+            const repoUrl = document.getElementById('repo-url').value;
+            fetch('/api/repos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ repo_url: repoUrl })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
